@@ -50,7 +50,15 @@ async def consume_messages(consumer):
                 print(message_string)
                 data = json.loads(value)
 
-                asyncio.create_task(process_ad_event(conn, data))
+                if "event_type" not in data:
+                    print("unsubscript event type")
+                else:
+                    event_type = data["event_type"]
+                    match event_type:
+                        case "ad_event":
+                            asyncio.create_task(process_ad_event(conn, data))
+                        case _:
+                            print("Without handler for event type: ", event_type)
 
 
     finally:
