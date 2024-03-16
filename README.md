@@ -39,6 +39,12 @@ docker-compose up -d
 * MySQL Database: The MySQL database runs on http://localhost:3306. You can connect to it using your MySQL client UI with the following credentials:
     * Username: `test`
     * Password: `test`
+    ```
+    mysql -h 127.0.0.1 -u test -p
+    # type password: test
+    use simple;
+    select * from ad_events;
+    ```
 * Simple Server: This service runs on http://localhost:8888. Its behavior depends on its implementation in the ./simple-server directory.
 
 ## Networks
