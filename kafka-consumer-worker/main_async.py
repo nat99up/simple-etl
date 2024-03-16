@@ -23,7 +23,7 @@ async def create_consumer(topic_name, group_id, bootstrap_servers):
 async def process_ad_event(conn, data):
     cursor = await conn.cursor()
     try:
-        await cursor.execute("INSERT INTO ad_events (event_type, location) VALUES (%s, %s)", (data["action"], data["location"]))
+        await cursor.execute("INSERT INTO ad_events (action, location) VALUES (%s, %s)", (data["action"], data["location"]))
         await conn.commit()
     except Exception as e:
         print(f"Error inserting data: {e}")
