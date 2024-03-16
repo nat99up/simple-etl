@@ -54,12 +54,12 @@ async def consume_messages(consumer):
                     print("unsubscript event type")
                 else:
                     event_type = data["event_type"]
-                    match event_type:
-                        case "ad_event":
-                            asyncio.create_task(process_ad_event(conn, data))
-                        case _:
-                            print("Without handler for event type: ", event_type)
-
+                    if event_type == "ad_event":
+                        asyncio.create_task(process_ad_event(conn, data))
+                    elif event_type == "bot_event":
+                        print("Unsupport bot_event yet!")
+                    else:
+                        print("Without handler for event type: ", event_type)
 
     finally:
         # Close consumer connection
