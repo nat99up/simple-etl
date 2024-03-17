@@ -45,20 +45,6 @@ services:
     # volumes:
     #   - kafka_1_data:/bitnami/kafka
 
-  mysql:
-    container_name: mysql
-    build: ./dump
-    restart: always
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=pwd
-      - MYSQL_DATABASE=simple
-      - MYSQL_USER=test
-      - MYSQL_PASSWORD=test
-    networks:
-      - app-tier
-
   kafka-ui:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
@@ -91,16 +77,6 @@ services:
       - app-tier
     ports:
       - "8888:8888"
-
-  kafka-consumer-worker:
-    container_name: kafka-consumer-worker
-    build: ./kafka-consumer-worker
-    depends_on:
-      - kafka-0
-      - kafka-1
-      - kafka-ui
-    networks:
-      - app-tier
 
 # volumes:
 #   kafka_0_data:
