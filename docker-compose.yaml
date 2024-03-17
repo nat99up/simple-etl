@@ -66,6 +66,7 @@ services:
       - ./kafka-ui/config.yml:/etc/kafkaui/dynamic_config.yaml
     environment:
       DYNAMIC_CONFIG_ENABLED: 'true'
+      AUTH_ENABLE: 'false'
     depends_on:
       - kafka-0
       - kafka-1
