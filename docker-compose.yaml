@@ -49,7 +49,7 @@ services:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
     volumes:
-      - ./kafka/kafka-ui-config.yml:/etc/kafkaui/dynamic_config.yaml
+      - ./kafka/kafka-ui-config.yaml:/etc/kafkaui/dynamic_config.yaml
     environment:
       DYNAMIC_CONFIG_ENABLED: 'true'
     depends_on:
