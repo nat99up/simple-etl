@@ -67,6 +67,42 @@ services:
       retries: 3
       start_period: 30s
 
+  postgres:
+    container_name: postgres
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - ./dump/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-tier
+    ports:
+      - "5432:5432"
+    # healthcheck:
+    #   test: ["CMD", "pg_isready", "-U", "airflow"]
+    #   interval: 10s
+    #   retries: 5
+    #   start_period: 5s
+    restart: always
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:8
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./dump/servers.json:/pgadmin4/servers.json
+    networks:
+      - app-tier
+    depends_on:
+      - postgres
+    ports:
+      - "80:80"
+
   simple-server:
     container_name: simple-server
     build: ./simple-server
