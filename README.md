@@ -4,9 +4,9 @@ This project defines a multi-container application using Docker Compose. It sets
 
 * **Kafka Clusters (kafka-0, kafka-1)**: This configuration enables distributed messaging capabilities in the application.
 * **kafka-ui**: Offer a web-based interface for monitoring your Kafka clusters (requires configuration in ./kafka-ui/config.yml).
-* **simple-server**: Built by `node.js express` and used as a a producer to the Kafka clusters.
-* **kafka-consumer-worker**: Built by `python asycio` and used as a a consumer to the Kafka clusters.
-* **mysql**: Used as the data downstream behind `kafka-consumer-worker`. `init.sql` in the ./dump directory is used to create the required Tables.
+* **simple-server**: Built by `node.js-express` and used as a a producer to the Kafka clusters.
+* **airflow**: Built by `python-airflow` and used as a a consumer to the Kafka clusters.
+* **postgre**: Used as the data downstream behind `airflow`. `init.sql` in the ./dump directory is used to create the required Tables.
 
 ## Prerequisites
 
@@ -35,16 +35,8 @@ docker-compose up -d
 
 ## Accessing Services (if applicable)
 
-* Kafka UI: If you configured the ./kafka-ui/config.yml file properly, access the Kafka UI at http://localhost:8080.
-* MySQL Database: The MySQL database runs on http://localhost:3306. You can connect to it using your MySQL client UI with the following credentials:
-    * Username: `test`
-    * Password: `test`
-    ```
-    mysql -h 127.0.0.1 -u test -p
-    # type password: test
-    use simple;
-    select * from ad_events;
-    ```
+* Kafka UI: Access the Kafka UI at http://localhost:8080.
+* pgAdmin: The Postgres database runs on http://localhost:3306. You can connect to it using your pgAdmin client UI on http://localhost:5050
 * Simple Server: This service runs on http://localhost:8888. Its behavior depends on its implementation in the ./simple-server directory.
 
 ## Networks
