@@ -49,7 +49,7 @@ services:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
     volumes:
-      - ./kafka-ui/config.yml:/etc/kafkaui/dynamic_config.yaml
+      - ./kafka/kafka-ui-config.yml:/etc/kafkaui/dynamic_config.yaml
     environment:
       DYNAMIC_CONFIG_ENABLED: 'true'
     depends_on:
@@ -100,7 +100,23 @@ services:
     depends_on:
       - postgres
     ports:
-      - "80:80"
+      - "5050:80"
+
+  redis:
+    image: redis:latest
+    expose:
+      - 6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 50
+      start_period: 30s
+    restart: always
+    networks:
+      - app-tier
+    ports:
+      - "6379:6379"
 
   simple-server:
     container_name: simple-server
