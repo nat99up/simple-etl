@@ -2,7 +2,7 @@ const { sendToKafka } = require('../utils/kafkaProducer');
 
 exports.view = async (req, res) => {
     const location = req.query.location ? req.query.location : "Unknown";
-    respJson = {"event_type": "ad_event", "action": "view", "location": location};
+    respJson = {"action": "view", "location": location};
     sendToKafka('ad_event', respJson)
         .then(() => {
             console.log("Successfully sent message to Kafka");
@@ -15,7 +15,7 @@ exports.view = async (req, res) => {
 
 exports.impression = async (req, res) => {
     const location = req.query.location ? req.query.location : "Unknown";
-    respJson = {"event_type": "ad_event", "action": "impression", "location": location};
+    respJson = {"action": "impression", "location": location};
     sendToKafka('ad_event', respJson)
         .then(() => {
             console.log("Successfully sent message to Kafka");
@@ -28,7 +28,7 @@ exports.impression = async (req, res) => {
 
 exports.click = async (req, res) => {
     const location = req.query.location ? req.query.location : "Unknown";
-    respJson = {"event_type": "ad_event", "action": "click", "location": location};
+    respJson = {"action": "click", "location": location};
     sendToKafka('ad_event', respJson)
         .then(() => {
             console.log("Successfully sent message to Kafka");

@@ -37,6 +37,13 @@ def listen_kafka():
         print_event(topic, event)
         event_dict = json.loads(event)
 
+        if topic == 'ad_event':
+            print(f"Got ad_event: {event_dict}")
+        elif topic == 'bot_event':
+            print(f"Got bot_event: {event_dict}")
+        else:
+            print(f"Unsupported event_type: {event_dict['event_type']}")
+
 kafka_consumer_task = PythonOperator(
     task_id='kafka_consumer',
     python_callable=listen_kafka,
