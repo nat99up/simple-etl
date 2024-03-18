@@ -1,16 +1,19 @@
-import airflow
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 import datetime
+import json
 
 default_args = {
     'owner': 'airflow',
-    'concurrency': 1
+    'start_date': datetime.datetime(2024, 1, 1),
+    'concurrency': 1,
+    'schedule_interval': '@once'
 }
 
 dag = DAG(
     'kafka_consumer',
-    default_args=default_args
+    default_args=default_args,
+    max_active_runs=1
 )
 
 def print_event(topic, event):
@@ -32,7 +35,7 @@ def listen_kafka():
         topic = message.topic
         event = message.value.decode('utf-8')
         print_event(topic, event)
-        print(type(event))
+        event_dict = json.loads(event)
 
 kafka_consumer_task = PythonOperator(
     task_id='kafka_consumer',
