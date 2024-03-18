@@ -1,5 +1,6 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.api.client.local_client import Client
 import datetime
 import json
 import psycopg2
@@ -30,6 +31,8 @@ dag = DAG(
     max_active_runs=1
 )
 
+c = Client(None, None)
+
 def listen_kafka():
     from kafka import KafkaConsumer
 
@@ -53,6 +56,8 @@ def listen_kafka():
                 print("Insertion Successful!")
             elif topic == 'bot_event':
                 print(f"Got bot_event: {event_data}")
+                c.trigger_dag("bot_handler", conf={"duration": event_data["duration"]})
+                print("Trigger Successful!")
             else:
                 print(f"Unsupported topic: {topic}")
         except:
