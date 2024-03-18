@@ -1,21 +1,16 @@
 import airflow
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+import datetime
 
 default_args = {
     'owner': 'airflow',
-    'start_date': airflow.utils.dates.days_ago(2),
-    'depends_on_past': False,
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'priority_weight': 10,
+    'concurrency': 1
 }
 
 dag = DAG(
-    'kafka_listener_dag',
-    default_args=default_args,
-    schedule_interval=None,
+    'kafka_consumer',
+    default_args=default_args
 )
 
 def print_event(topic, event):
@@ -31,17 +26,18 @@ def listen_kafka():
         auto_offset_reset='earliest',
         enable_auto_commit=True
     )
-    consumer.subscribe(['ad_event'])
+    consumer.subscribe(['ad_event', 'bot_event'])
 
     for message in consumer:
         topic = message.topic
         event = message.value.decode('utf-8')
         print_event(topic, event)
+        print(type(event))
 
-listen_kafka_task = PythonOperator(
-    task_id='listen_kafka',
+kafka_consumer_task = PythonOperator(
+    task_id='kafka_consumer',
     python_callable=listen_kafka,
     dag=dag
 )
 
-listen_kafka_task
+kafka_consumer_task
