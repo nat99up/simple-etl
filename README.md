@@ -6,7 +6,7 @@ This project defines a multi-container application using Docker Compose. It sets
 * **kafka-ui**: Offer a web-based interface for monitoring your Kafka clusters (requires configuration in ./kafka-ui/config.yml).
 * **simple-server**: Built by `node.js-express` and used as a a producer to the Kafka clusters.
 * **airflow**: Built by `python-airflow` and used as a a consumer to the Kafka clusters.
-* **postgre**: Used as the data downstream behind `airflow`. `init.sql` in the ./dump directory is used to create the required Tables.
+* **postgres**: Used as the data downstream behind `airflow`. `init.sql` in the ./dump directory is used to create the required Tables.
 
 ## Prerequisites
 

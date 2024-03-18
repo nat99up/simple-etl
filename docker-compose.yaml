@@ -162,6 +162,17 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
+  airflow-worker:
+    container_name: airflow-worker
+    extends:
+      file:  ./airflow/docker-compose.yaml
+      service: airflow-worker
+    networks:
+      - app-tier
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
 # volumes:
 #   kafka_0_data:
 #     driver: local

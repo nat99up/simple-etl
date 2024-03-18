@@ -1,1 +1,3 @@
 *node_module/
+airflow/logs/
+airflow/dags/__pycache__
