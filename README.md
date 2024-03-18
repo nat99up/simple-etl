@@ -39,7 +39,7 @@ docker-compose up -d
 ## Accessing Services (if applicable)
 
 * Kafka UI: Access the Kafka UI at http://localhost:8080.
-* pgAdmin: The Postgres database runs on http://localhost:3306. You can connect to it using your pgAdmin client UI on http://localhost:5050 (`db:username:pwd = airflow/airflow/airflow`)
+* pgAdmin: The Postgres database runs on http://localhost:3306 (`useremal:pwd = admin@example.com/admin`). You can connect to it using your pgAdmin client UI on http://localhost:5050 (`db:username:pwd = airflow/airflow/airflow`)
 * Simple Server: This service runs on http://localhost:8888. Its behavior depends on its implementation in the ./simple-server directory.
 * Airflow Web Server: Access the airflow UI at http://localhost:8081. You can view all dags and it's status.
 
